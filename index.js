@@ -29,9 +29,11 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("common"));
 
+app.use(express.static(__dirname + "/public/uploads"));
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/images");
+    cb(null, __dirname + "public/images");
   },
   filename: (req, file, cb) => {
     cb(null, req.body.name);
