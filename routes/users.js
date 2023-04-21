@@ -142,8 +142,12 @@ router.put("/:id/unfollow", async (req, res) => {
 
 router.put("/:id/update", async (req, res) => {
   const id = req.params.id;
+  const a = await User.findById(id);
   try {
-    const user = await User.findByIdAndUpdate({ _id: id }, req.body);
+    const user = await User.findByIdAndUpdate(
+      { _id: id, username: a.username, password: a.password },
+      req.body
+    );
     return res.status(200).json(user);
   } catch (err) {
     return res.status(500).json(err);
