@@ -29,11 +29,9 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("common"));
 
-app.use(express.static(__dirname + "/public/images"));
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __dirname + "public/images");
+    cb(null, "public/images");
   },
   filename: (req, file, cb) => {
     cb(null, req.body.name);
@@ -48,6 +46,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
     console.error(error);
   }
 });
+app.use(express.static("public"));
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
